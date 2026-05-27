@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.png" alt="Bubble Mew" width="160" />
+<img src="public/logo.png" alt="Bubble Mew" width="160" />
 
 # Bubble Mew — Dancing Mad Ultimate (UMAD) Strategy Site
 
