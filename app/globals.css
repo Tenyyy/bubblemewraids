@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+  Tailwind utility colors (bg-bubble-*, text-bubble-*, …) point at runtime CSS
+  variables so the whole palette swaps when [data-theme] changes on <html>.
+*/
+@theme {
+  --color-bubble-bg: var(--bubble-bg);
+  --color-bubble-panel: var(--bubble-panel);
+  --color-bubble-border: var(--bubble-border);
+  --color-bubble-pink: var(--bubble-pink);
+  --color-bubble-cyan: var(--bubble-cyan);
+  --color-bubble-violet: var(--bubble-violet);
+  --color-bubble-text: var(--bubble-text);
+  --color-bubble-muted: var(--bubble-muted);
+  --color-bubble-strong: var(--bubble-strong);
+}
+
+/* Dark theme (default) */
+:root,
+[data-theme="dark"] {
+  --bubble-bg: #0f1020;
+  --bubble-panel: #181a2f;
+  --bubble-border: #2a2d4a;
+  --bubble-pink: #ff8fcf;
+  --bubble-cyan: #7fe7ff;
+  --bubble-violet: #b69cff;
+  --bubble-text: #e7e8f5;
+  --bubble-muted: #a3a9cc;
+  --bubble-strong: #ffffff;
+  --bubble-glow-1: rgba(255, 143, 207, 0.08);
+  --bubble-glow-2: rgba(127, 231, 255, 0.08);
+  color-scheme: dark;
+}
+
+/* Light theme — designed alongside dark, contrast verified (AA) */
+[data-theme="light"] {
+  --bubble-bg: #fdf4fb;
+  --bubble-panel: #ffffff;
+  --bubble-border: #ecd6e8;
+  --bubble-pink: #c12f86;
+  --bubble-cyan: #0e7c97;
+  --bubble-violet: #7c4fd6;
+  --bubble-text: #2a2335;
+  --bubble-muted: #655f7a;
+  --bubble-strong: #1a1526;
+  --bubble-glow-1: rgba(255, 143, 207, 0.12);
+  --bubble-glow-2: rgba(127, 231, 255, 0.14);
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bubble-bg);
+  color: var(--color-bubble-text);
+  background-image:
+    radial-gradient(circle at 15% 10%, var(--bubble-glow-1), transparent 40%),
+    radial-gradient(circle at 85% 0%, var(--bubble-glow-2), transparent 40%);
+  background-attachment: fixed;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Markdown prose, driven by the same theme tokens */
+.prose {
+  --tw-prose-body: var(--bubble-text);
+  --tw-prose-headings: var(--bubble-strong);
+  --tw-prose-links: var(--bubble-cyan);
+  --tw-prose-bold: var(--bubble-strong);
+  --tw-prose-bullets: var(--bubble-pink);
+  --tw-prose-counters: var(--bubble-muted);
+  --tw-prose-quotes: var(--bubble-muted);
+  --tw-prose-quote-borders: var(--bubble-pink);
+  --tw-prose-code: var(--bubble-cyan);
+  --tw-prose-hr: var(--bubble-border);
+  --tw-prose-th-borders: var(--bubble-border);
+  --tw-prose-td-borders: var(--bubble-border);
+  max-width: none;
+}
+
+.prose a {
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.prose a:hover {
+  color: var(--bubble-pink);
+}
+
+.prose blockquote {
+  background-color: color-mix(in oklab, var(--bubble-pink) 8%, transparent);
+  border-radius: 0.5rem;
+  padding: 0.25rem 1rem;
+  font-style: normal;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "" !important;
+}
+.prose :not(pre) > code {
+  background-color: var(--bubble-panel);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--bubble-border);
+  font-weight: 500;
+}
+
+.prose table {
+  border: 1px solid var(--bubble-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.prose thead {
+  background-color: var(--bubble-panel);
+}
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem;
+}
+
+/* Brand logos (Discord / Twitch) rendered inline within text */
+.prose img[alt="Discord"],
+.prose img[alt="Twitch"] {
+  display: inline-block;
+  height: 1.1em;
+  width: auto;
+  margin: 0 0.4em -0.2em 0;
+  vertical-align: baseline;
+}
+
+/* anchor links added by rehype-autolink-headings */
+.prose .anchor {
+  border-bottom: none;
+  margin-left: 0.4rem;
+  opacity: 0;
+  color: var(--bubble-muted);
+  transition: opacity 0.15s ease;
+}
+.prose h1:hover .anchor,
+.prose h2:hover .anchor,
+.prose h3:hover .anchor {
+  opacity: 1;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
